@@ -1,14 +1,38 @@
 const express = require('express');
 const router = express.Router();
+const Project = require('../models/Project');
 
 // Routes
-router.get('/', (req, res) => {
-    const locals = {
-        title: 'Portfolio JS',
-        description: 'Portfolio backend made in express'
-    };
+router.get('/', async (req, res) => {
+    try {
+        const locals = {
+            title: 'Portfolio JS',
+            description: 'Portfolio backend made in express'
+        };
 
-    res.render('index', { locals });
+        let perPage = 2;
+        let page = req.query.page || 1;
+
+        const data = await Project.aggregate([{
+            $sort: { createdAt: -1 }
+        }])
+        .skip(perPage * page - perPage)
+        .limit(perPage)
+        .exec();
+
+        const count = await Project.countDocuments();
+        const nextPage = parseInt(page) + 1;
+        const hasNextPage = nextPage <= Math.ceil(count / perPage);
+
+        res.render('index', {
+            locals,
+            data,
+            current: page,
+            nextPage: hasNextPage ? nextPage : null
+        });
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 router.get('/about', (req, res) => {

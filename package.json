@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "app.js",
-    "dev": "js-cms/node_modules/.bin/nodemon app.js"
+    "dev": "nodemon app.js"
   },
-  "keywords": [],
+  "keywords": ["express", "javascript", "backend", "cms", "api"],
   "author": "Antoine Chouinard",
   "license": "ISC",
   "dependencies": {

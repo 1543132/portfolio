@@ -17,65 +17,27 @@
 
     <div class="projects__lists">
         <div class="projects__container">
-            <div class="project">
-                <a href="#">
-                    <div class="project__container">
-                        <img src="https://placehold.co/600x400" alt="Image project" class="project__img">
+            <% data.forEach(project => { %>
+                <div class="project">
+                    <a href="/projects/<%= project.id %>">
+                        <div class="project__container">
+                            <img src="https://placehold.co/600x400" alt="Image project" class="project__img">
 
-                        <h3 class="project__title">
-                            Project Title
-                        </h3>
+                            <h3 class="project__title">
+                                <%= project.title %>
+                            </h3>
 
-                        <span class="project__date">11-02-2025</span>
-                    </div>
-                </a>
-            </div>
-
-            <div class="project">
-                <a href="#">
-                    <div class="project__container">
-                        <img src="https://placehold.co/600x400" alt="Image project" class="project__img">
-
-                        <h3 class="project__title">
-                            Project Title
-                        </h3>
-
-                        <span class="project__date">11-02-2025</span>
-                    </div>
-                </a>
-            </div>
-
-            <div class="project">
-                <a href="#">
-                    <div class="project__container">
-                        <img src="https://placehold.co/600x400" alt="Image project" class="project__img">
-
-                        <h3 class="project__title">
-                            Project Title
-                        </h3>
-
-                        <span class="project__date">11-02-2025</span>
-                    </div>
-                </a>
-            </div>
-
-            <div class="project">
-                <a href="#">
-                    <div class="project__container">
-                        <img src="https://placehold.co/600x400" alt="Image project" class="project__img">
-
-                        <h3 class="project__title">
-                            Project Title
-                        </h3>
-
-                        <span class="project__date">11-02-2025</span>
-                    </div>
-                </a>
-            </div>
+                            <span class="project__date"><%= project.createdAt.toDateString() %></span>
+                        </div>
+                    </a>
+                </div>
+            <% }) %>
         </div>
 
-        <div class="projects__pagination">
-            <a href="#" class="pagination">View older projects</a>
-        </div>
+        <% if (nextPage !== null) { %>
+            <div class="projects__pagination">
+                <a href="/?page=<%= nextPage %>" class="pagination">View older projects</a>
+            </div>
+        <% } %>
     </div>
 </section>
