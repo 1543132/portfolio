@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Project = require('../models/Project');
 
-// Routes
+// Home route
 router.get('/', async (req, res) => {
     try {
         const locals = {
@@ -35,8 +35,55 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/about', (req, res) => {
+// Project route
+router.get('/projects/:id', async (req, res) => {
+    try {
+        let slug = req.params.id;
+        const data = await Project.findById({
+            _id: slug
+        });
+        const locals = {
+            title: data.title,
+            description: 'Portfolio backend made in express'
+        };
+
+        res.render('project', {locals, data});
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+// About route
+router.get('/about', async (req, res) => {
     res.render('about');
+});
+
+// Search route
+
+router.post('/search', async (req, res) => {
+   try  {
+       const locals = {
+           title: 'Search',
+           description: 'Portfolio backend made in express'
+       }
+
+       let searchTerm = req.body.searchTerm;
+       const searchNoSpecialChars = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
+
+       const data = await Project.find({
+           $or: [
+               { title: { $regex: new RegExp(searchNoSpecialChars, 'i') }},
+               { body: { $regex: new RegExp(searchNoSpecialChars, 'i') }}
+           ]
+       });
+
+       res.render('search', {
+          data,
+          locals
+       });
+   } catch (error) {
+       console.log(error);
+   }
 });
 
 module.exports = router;

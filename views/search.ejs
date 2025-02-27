@@ -1,13 +1,7 @@
 <div class="hero">
     <h1 class="hero__title">
-        Antoine Chouinard Portfolio's
+        Search Results
     </h1>
-
-    <p class="hero__body">
-        Developer Back-end
-    </p>
-
-    <img src="/img/hero_bg.webp" alt="Image tech" class="hero__bg">
 </div>
 
 <section class="projects">
@@ -33,11 +27,5 @@
                 </div>
             <% }) %>
         </div>
-
-        <% if (nextPage !== null) { %>
-            <div class="projects__pagination">
-                <a href="/?page=<%= nextPage %>" class="pagination">View older projects</a>
-            </div>
-        <% } %>
     </div>
 </section>
