@@ -2,7 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Project = require('../models/Project');
 
-// Home route
+//---------------- GET ROUTES ----------------
+
+/**
+ * Home GET
+ */
 router.get('/', async (req, res) => {
     try {
         const locals = {
@@ -28,14 +32,17 @@ router.get('/', async (req, res) => {
             locals,
             data,
             current: page,
-            nextPage: hasNextPage ? nextPage : null
+            nextPage: hasNextPage ? nextPage : null,
+            currentRoute: '/'
         });
     } catch (error) {
         console.log(error);
     }
 });
 
-// Project route
+/**
+ * Projects GET
+ */
 router.get('/projects/:id', async (req, res) => {
     try {
         let slug = req.params.id;
@@ -47,19 +54,36 @@ router.get('/projects/:id', async (req, res) => {
             description: 'Portfolio backend made in express'
         };
 
-        res.render('project', {locals, data});
+        res.render('project', {
+            locals,
+            data,
+            currentRoute: `/projects/{$slug}`
+        });
     } catch (error) {
         console.log(error);
     }
 });
 
-// About route
+/**
+ * About GET
+ */
 router.get('/about', async (req, res) => {
-    res.render('about');
+    const locals = {
+        title: 'About',
+        description: 'Portfolio backend made in express'
+    };
+
+    res.render('about', {
+        locals,
+        currentRoute: `/about`,
+    });
 });
 
-// Search route
+//---------------- POST ROUTES ----------------
 
+/**
+ * Search POST
+ */
 router.post('/search', async (req, res) => {
    try  {
        const locals = {

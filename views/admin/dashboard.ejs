@@ -1,0 +1,23 @@
+<div class="admin__title">
+    <h2>Projects</h2>
+    <a href="/add-project" class="btn">+ Add New</a>
+</div>
+
+<div class="admin__projects">
+    <% data.forEach(project => { %>
+        <div class="admin__project">
+            <a href="/projects/<%= project._id %>">
+                <div class="admin__project-title">
+                    <%= project.title %>
+                </div>
+            </a>
+            <div class="admin__project__controls">
+                <a href="/edit-project/<%= project._id %>" class="btn">Edit</a>
+
+                <form action="/delete-project/<%= project._id %>" method="POST">
+                    <input type="submit" value="Delete" class="btn btn--delete">
+                </form>
+            </div>
+        </div>
+    <% }) %>
+</div>

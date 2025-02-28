@@ -52,7 +52,7 @@ textarea {
     cursor: pointer;
 }
 
-.btn-delete {
+.btn--delete {
     padding: 10px 16px;
     background-color: var(--red);
 }
@@ -186,7 +186,6 @@ img {
     margin: 5px 0 40px 0;
 }
 
-
 /* Home Article List */
 .project__title {
     font-weight: 400;
@@ -239,22 +238,22 @@ img {
 }
 
 /* Dashboard Admin */
-.admin-title {
+.admin__title {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.admin-posts {
+.admin__projects {
     padding: 0;
     margin: 0;
 }
 
-.admin-post-controls form {
+.admin__post__controls form {
     display: inline-block;
 }
 
-.admin-post-controls .btn  {
+.admin__project__controls .btn  {
     display: inline-block;
     background-color: var(--black);
     color: var(--gray-light);
@@ -265,7 +264,12 @@ img {
     line-height: 2;
 }
 
-.admin-posts li {
+.admin__project__controls .btn--delete {
+    padding: 10px 16px;
+    background-color: var(--red);
+}
+
+.admin__project {
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
@@ -281,7 +285,6 @@ img {
     left: 0;
     right: 0;
 }
-
 
 .search__bar.open {
     transform: translateY(0);
@@ -300,7 +303,6 @@ img {
     color: var(--gray-light);
     padding: 15px;
 }
-
 
 .pagination {
     font-size: 1.3rem;
