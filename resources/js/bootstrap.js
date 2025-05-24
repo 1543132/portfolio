@@ -1,4 +1,4 @@
-import 'resources/js/bootstrap.js';
+//import 'resources/js/bootstrap.js';
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

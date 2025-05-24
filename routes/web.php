@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\PagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +21,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin', function() {
+    return 'You are an admin or an editor';
+})->middleware('admin');
+
+Route::resource('/admin/pages', PagesController::class);
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
