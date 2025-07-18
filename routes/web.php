@@ -22,7 +22,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/admin', function() {
-    return 'You are an admin or an editor';
+    return view('admin.index');
 })->middleware('admin');
 
 Route::resource('/admin/pages', PagesController::class);

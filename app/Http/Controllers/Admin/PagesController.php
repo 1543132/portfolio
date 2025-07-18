@@ -6,16 +6,23 @@ use Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WorkWithPage;
 use App\Models\Page;
-use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $pages = Page::all();
+        if (Auth::user()->isAdminOrEditor()) {
+            $pages = Page::all();
+        }else{
+            $pages = Auth::user()->pages()->get();
+        }
         return view('admin.pages.index', ['pages' => $pages]);
     }
 
@@ -54,6 +61,10 @@ class PagesController extends Controller
      */
     public function edit(Page $page)
     {
+        if (Auth::user()->cant('update', $page)) {
+            return redirect()->route('pages.index');
+        }
+
         return view('admin.pages.edit', ['model' => $page]);
     }
 
@@ -62,6 +73,10 @@ class PagesController extends Controller
      */
     public function update(WorkWithPage $request, Page $page)
     {
+        if (Auth::user()->cant('update', $page)) {
+            return redirect()->route('pages.index');
+        }
+
         $page->fill($request->only([
             'title',
             'url',
@@ -78,6 +93,8 @@ class PagesController extends Controller
      */
     public function destroy(Page $page)
     {
-        //
+        if (Auth::user()->cant('delete', $page)) {
+            return redirect()->route('pages.index');
+        }
     }
 }
