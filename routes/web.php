@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\PagesController;
+use App\Http\Controllers\Admin\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,14 @@ Route::get('/admin', function() {
     return view('admin.index');
 })->middleware('admin');
 
-Route::resource('/admin/pages', PagesController::class);
+Route::resource('/admin/pages', PagesController::class, ['except' => [
+    'show'
+]]);
+
+Route::resource('/admin/users', UsersController::class, ['except' => [
+    'show',
+    'create',
+    'store'
+]]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

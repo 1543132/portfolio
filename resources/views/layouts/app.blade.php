@@ -14,7 +14,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/sass/app.scss'])
 </head>
 <body>
     <div id="app">
@@ -30,7 +30,30 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        <!-- Authentication Links -->
+                        @guest
+                        @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown1" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Pages <span class="caret"></span>
+                                </a>
 
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
+                                    <a class="dropdown-item" href="{{ route('pages.index') }}">
+                                        {{ __('Page List') }}
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('pages.create') }}">
+                                        {{ __('Page Create') }}
+                                    </a>
+                                </div>
+                            </li>
+                            @can('manageUsers', App\User::class)
+                            <li class="nav-item">
+                                <a href="{{ route('users.index') }}" class="nav-link">Manage Users</a>
+                            </li>
+                            @endcan
+                        @endguest
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -76,5 +99,9 @@
             @yield('content')
         </main>
     </div>
+
+    <footer>
+        @vite(['resources/js/app.js'])
+    </footer>
 </body>
 </html>
