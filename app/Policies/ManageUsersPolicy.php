@@ -14,7 +14,7 @@ class ManageUsersPolicy
         //
     }
 
-    public function manageUsers(User $user)
+    public function manageUsers(User $user): bool
     {
         return $user->hasRole('admin');
     }

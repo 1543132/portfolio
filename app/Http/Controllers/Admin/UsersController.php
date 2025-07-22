@@ -29,10 +29,6 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        if (Auth::user()->id == $user->id) {
-            return redirect()->route('users.index')->with('status', 'You cannot edit yourself');
-        }
-
         return view('admin.users.edit', [
             'model' => $user,
             'roles' => Role::all()
@@ -44,10 +40,6 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if (Auth::user()->id == $user->id) {
-            return redirect()->route('users.index')->with('status', 'You cannot edit yourself');
-        }
-
         $user->roles()->sync($request->roles);
 
         return redirect()->route('users.index')->with('status', $user->name . ' was updated');

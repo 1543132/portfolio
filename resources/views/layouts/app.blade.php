@@ -18,79 +18,67 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+        <nav class="navbar has-background-primary" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item has-text-dark" href="{{ url('/admin') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            </div>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown1" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Pages <span class="caret"></span>
+            <div id="admin-nav" class="navbar-menu">
+                <div class="navbar-start">
+                    @guest
+                    @else
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link has-text-dark">Pages</a>
+
+                            <div class="navbar-dropdown">
+                                <a class="navbar-item" href="{{ route('pages.index') }}">
+                                    {{ __('Page List') }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
-                                    <a class="dropdown-item" href="{{ route('pages.index') }}">
-                                        {{ __('Page List') }}
-                                    </a>
+                                <a class="navbar-item" href="{{ route('pages.create') }}">
+                                    {{ __('Page Create') }}
+                                </a>
+                            </div>
+                        </div>
+                        @can('manageUsers', App\User::class)
+                            <a href="{{ route('users.index') }}" class="navbar-item has-text-dark">Manage Users</a>
+                        @endcan
+                    @endguest
+                </div>
 
-                                    <a class="dropdown-item" href="{{ route('pages.create') }}">
-                                        {{ __('Page Create') }}
-                                    </a>
-                                </div>
-                            </li>
-                            @can('manageUsers', App\User::class)
-                            <li class="nav-item">
-                                <a href="{{ route('users.index') }}" class="nav-link">Manage Users</a>
-                            </li>
-                            @endcan
-                        @endguest
-                    </ul>
+                <div class="navbar-end">
+                    @guest
+                        <div class="navbar-item">
+                            <div class="buttons">
+                                @if (Route::has('login'))
+                                    <a class="button is-primary" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                @endif
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                @if (Route::has('register'))
+                                    <a class="button is-primary" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                @endif
+                            </div>
+                        </div>
+                    @else
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link has-text-dark">
+                                {{ Auth::user()->name }}
+                            </a>
+                            <div class="navbar-dropdown">
+                                <a class="navbar-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </div>
+                    @endguest
                 </div>
             </div>
         </nav>

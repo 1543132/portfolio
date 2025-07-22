@@ -3,9 +3,11 @@
 @section('content')
     <div class="container">
         @if (session('status'))
-            <div class="alert alert-info">
-                {{ session('status') }}
-            </div>
+            <article class="message is-danger">
+                <div class="message-body">
+                    {{ session('status') }}
+                </div>
+            </article>
         @endif
         <table class="table">
             <thead>
